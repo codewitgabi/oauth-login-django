@@ -30,10 +30,21 @@ DEFAULT_APPS = [
 CUSTOM_APPS = [
     # apps created in this project.
 
-    "account.apps.AccountConfig",
+    "myapp.apps.MyappConfig",
 ]
 
-INSTALLED_APPS = [*DEFAULT_APPS, *CUSTOM_APPS]
+THIRD_PARTY_APPS = [
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+
+    #"allauth.socialaccount.providers.facebook",
+    #"allauth.socialaccount.providers.github",
+    #"allauth.socialaccount.providers.google",
+    #"allauth.socialaccount.providers.twitter",
+]
+
+INSTALLED_APPS = [*DEFAULT_APPS, *CUSTOM_APPS, *THIRD_PARTY_APPS]
 
 
 MIDDLEWARE = [
@@ -65,6 +76,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'oauth.wsgi.application'
+
+AUTH_USER_MODEL = "myapp.User"
 
 
 # Database
@@ -116,3 +129,18 @@ STATICFILES_DIRS = (
 # Default primary key field type
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Allauth Configurations
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+
+    # allauth
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = [
+
+]
