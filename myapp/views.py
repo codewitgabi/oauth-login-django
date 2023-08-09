@@ -15,4 +15,4 @@ def sign_in_with_oauth(request: HttpRequest):
 
     }  # view context data
 
-    return render(request, "account/index.html", context)
+    return render(request, "myapp/index.html", context)
