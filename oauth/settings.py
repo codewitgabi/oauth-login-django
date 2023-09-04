@@ -1,15 +1,12 @@
 from pathlib import Path
-from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY", "hdfjdnfl7479wfjHUEHJFJHIUOHiu8934rhjdvnspdinjohiOUI9565874RIWENFJWOEHFOJWEFJDOH5346576783FJSHDmndcksdFJKSDNkjndcj")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "True") != "False"
 
 ALLOWED_HOSTS = ["*"]
@@ -145,8 +142,8 @@ SITE_ID = 1
 SOCIALACCOUNT_PROVIDERS = {
     "facebook": {
         "APP": {
-            "client_id": config("FACEBOOK_SECRET"),
-            "key": config("FACEBOOK_KEY"),
+            "client_id": os.environ.get("FACEBOOK_SECRET"),
+            "key": os.environ.get("FACEBOOK_KEY"),
         },
         "METHOD": "oauth2",
         "SCOPE": ["email", "username", "public_profile"],
@@ -167,8 +164,8 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     "github": {
         "APP": {
-            "client_id": config("GITHUB_KEY"),
-            "secret": config("GITHUB_SECRET"),
+            "client_id": os.environ.get("GITHUB_KEY"),
+            "secret": os.environ.get("GITHUB_SECRET"),
         },
         "SCOPE": [
             "user"
@@ -176,8 +173,8 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     "google": {
         "APP": {
-            "client_id": config("GOOGLE_CLIENT_ID"),
-            "secret": config("GOOGLE_CLIENT_SECRET"),
+            "client_id": os.environ.get("GOOGLE_CLIENT_ID"),
+            "secret": os.environ.get("GOOGLE_CLIENT_SECRET"),
         },
         "SCOPE": [
             "profile",
@@ -189,5 +186,3 @@ SOCIALACCOUNT_PROVIDERS = {
         "OAUTH_PKCE_ENABLED": True
     }
 }
-print(config("FACEBOOK_SECRET"))
-
