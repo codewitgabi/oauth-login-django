@@ -1,4 +1,5 @@
 from pathlib import Path
+from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,9 +39,9 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
 
-    #"allauth.socialaccount.providers.facebook",
-    #"allauth.socialaccount.providers.github",
-    #"allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.facebook",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.google",
     #"allauth.socialaccount.providers.twitter",
 ]
 
@@ -141,6 +142,52 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 
-SOCIALACCOUNT_PROVIDERS = [
+SOCIALACCOUNT_PROVIDERS = {
+    "facebook": {
+        "APP": {
+            "client_id": config("FACEBOOK_SECRET"),
+            "key": config("FACEBOOK_KEY"),
+        },
+        "METHOD": "oauth2",
+        "SCOPE": ["email", "username", "public_profile"],
+        #"SDK_URL": "//connect.facebook.net/{locale}/sdk.js",
+        #"AUTH_PARAMS": {"auth_type": "reauthenticate"},
+        "INIT_PARAMS": {"cookie": True},
+        "FIELDS": [
+            "username",
+            "email",
+            "id",
+            "first_name",
+            "last_name",
+        ],
+        #"EXCHANGE_TOKEN": True,
+        "VERIFIED_EMAIL": False,
+        "VERSION": "v13.0",
+        "GRAPH_API_URL": "https://graph.facebook.com/v13.0"
+    },
+    "github": {
+        "APP": {
+            "client_id": config("GITHUB_KEY"),
+            "secret": config("GITHUB_SECRET"),
+        },
+        "SCOPE": [
+            "user"
+        ]
+    },
+    "google": {
+        "APP": {
+            "client_id": config("GOOGLE_CLIENT_ID"),
+            "secret": config("GOOGLE_CLIENT_SECRET"),
+        },
+        "SCOPE": [
+            "profile",
+            "email"
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "offline"
+        },
+        "OAUTH_PKCE_ENABLED": True
+    }
+}
+print(config("FACEBOOK_SECRET"))
 
-]

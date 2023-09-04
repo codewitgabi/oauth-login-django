@@ -1,3 +1,4 @@
+{% load socialaccount %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -13,19 +14,19 @@
     <div class="container-center">
       <div class="oauth-container">
         <h2>Login with oAuth</h2>
-        <a href="#!" class="oauth-links slate">
+        <a href="{% provider_login_url 'github' %}" class="oauth-links slate">
           <i class="bi bi-github"></i>
           <span>Continue With Github</span>
         </a>
-        <a href="#!" class="oauth-links blue-dark">
+        <a href="{% provider_login_url 'facebook' %}" class="oauth-links blue-dark">
           <i class="bi bi-facebook"></i>
           <span>Continue With Facebook</span>
         </a>
-        <a href="#!" class="oauth-links red">
+        <a href="{% provider_login_url 'google' %}" class="oauth-links red">
           <i class="bi bi-google"></i>
           <span>Continue With Google</span>
         </a>
-        <a href="#!" class="oauth-links blue-light">
+        <a href="{% provider_login_url 'github' %}" class="oauth-links blue-light">
           <i class="bi bi-twitter"></i>
           <span>Continue With Twitter</span>
         </a>
