@@ -5,10 +5,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY", "hdfjdnfl7479wfjHUEHJFJHIUOHiu8934rhjdvnspdinjohiOUI9565874RIWENFJWOEHFOJWEFJDOH5346576783FJSHDmndcksdFJKSDNkjndcj")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "True") != "False"
 
 ALLOWED_HOSTS = ["*"]
@@ -38,9 +36,9 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
 
-    #"allauth.socialaccount.providers.facebook",
-    #"allauth.socialaccount.providers.github",
-    #"allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.facebook",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.google",
     #"allauth.socialaccount.providers.twitter",
 ]
 
@@ -141,6 +139,57 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 
-SOCIALACCOUNT_PROVIDERS = [
+SOCIALACCOUNT_PROVIDERS = {
+    "facebook": {
+        "APP": {
+            "client_id": os.environ.get("FACEBOOK_SECRET"),
+            "key": os.environ.get("FACEBOOK_KEY"),
+        },
+        "METHOD": "oauth2",
+        "SCOPE": ["email", "username", "public_profile"],
+        #"SDK_URL": "//connect.facebook.net/{locale}/sdk.js",
+        #"AUTH_PARAMS": {"auth_type": "reauthenticate"},
+        "INIT_PARAMS": {"cookie": True},
+        "FIELDS": [
+            "username",
+            "email",
+            "id",
+            "first_name",
+            "last_name",
+        ],
+        #"EXCHANGE_TOKEN": True,
+        "VERIFIED_EMAIL": False,
+        "VERSION": "v13.0",
+        "GRAPH_API_URL": "https://graph.facebook.com/v13.0"
+    },
+    "github": {
+        "APP": {
+            "client_id": os.environ.get("GITHUB_KEY"),
+            "secret": os.environ.get("GITHUB_SECRET"),
+        },
+        "SCOPE": [
+            "user"
+        ]
+    },
+    "google": {
+        "APP": {
+            "client_id": os.environ.get("GOOGLE_CLIENT_ID"),
+            "secret": os.environ.get("GOOGLE_CLIENT_SECRET"),
+        },
+        "SCOPE": [
+            "profile",
+            "email"
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "offline"
+        },
+        "OAUTH_PKCE_ENABLED": True
+    }
+}
 
-]
+LOGIN_REDIRECT_URL = "myapp:oauth_signin"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_MAX_EMAIL_ADDRESSES = 2
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 4
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 600
+ACCOUNT_SESSION_REMEMBER = None
